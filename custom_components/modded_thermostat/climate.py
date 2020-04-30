@@ -6,11 +6,7 @@ import voluptuous as vol
 
 from homeassistant.components.climate import PLATFORM_SCHEMA, ClimateDevice
 from homeassistant.components.climate.const import (
-    ATTR_CURRENT_TEMPERATURE,
     ATTR_PRESET_MODE,
-    ATTR_HVAC_ACTION,
-    ATTR_HVAC_MODES,
-    ATTR_HVAC_MODE,
     CURRENT_HVAC_COOL,
     CURRENT_HVAC_HEAT,
     CURRENT_HVAC_IDLE,
@@ -20,13 +16,8 @@ from homeassistant.components.climate.const import (
     HVAC_MODE_OFF,
     PRESET_AWAY,
     PRESET_NONE,
-    SUPPORT_AUX_HEAT,
-    SUPPORT_FAN_MODE,
     SUPPORT_PRESET_MODE,
-    SUPPORT_SWING_MODE,
-    SUPPORT_TARGET_HUMIDITY,
     SUPPORT_TARGET_TEMPERATURE,
-    SUPPORT_TARGET_TEMPERATURE_RANGE,
 )
 
 from homeassistant.const import (
@@ -40,7 +31,6 @@ from homeassistant.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
     STATE_ON,
-    STATE_OFF,
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
@@ -268,58 +258,8 @@ class ModdedThermostat(ClimateDevice, RestoreEntity):
     @property
     def state_attributes(self) -> Dict[str, Any]:
         """Return the optional state attributes."""
-        supported_features = self.supported_features
-        data = {
-            ATTR_CURRENT_TEMPERATURE: show_temp(
-                self.hass,
-                self.current_temperature,
-                self.temperature_unit,
-                self.precision,
-            ),
-        }
 
-        if supported_features & SUPPORT_TARGET_TEMPERATURE:
-            data[ATTR_TEMPERATURE] = show_temp(
-                self.hass,
-                self.target_temperature,
-                self.temperature_unit,
-                self.precision,
-            )
-
-        if supported_features & SUPPORT_TARGET_TEMPERATURE_RANGE:
-            data[ATTR_TARGET_TEMP_HIGH] = show_temp(
-                self.hass,
-                self.target_temperature_high,
-                self.temperature_unit,
-                self.precision,
-            )
-            data[ATTR_TARGET_TEMP_LOW] = show_temp(
-                self.hass,
-                self.target_temperature_low,
-                self.temperature_unit,
-                self.precision,
-            )
-
-        if self.current_humidity is not None:
-            data[ATTR_CURRENT_HUMIDITY] = self.current_humidity
-
-        if supported_features & SUPPORT_TARGET_HUMIDITY:
-            data[ATTR_HUMIDITY] = self.target_humidity
-
-        if supported_features & SUPPORT_FAN_MODE:
-            data[ATTR_FAN_MODE] = self.fan_mode
-
-        if self.hvac_action:
-            data[ATTR_HVAC_ACTION] = self.hvac_action
-
-        if supported_features & SUPPORT_PRESET_MODE:
-            data[ATTR_PRESET_MODE] = self.preset_mode
-
-        if supported_features & SUPPORT_SWING_MODE:
-            data[ATTR_SWING_MODE] = self.swing_mode
-
-        if supported_features & SUPPORT_AUX_HEAT:
-            data[ATTR_AUX_HEAT] = STATE_ON if self.is_aux_heat else STATE_OFF
+        data = super().state_attributes
 
         if self._active_target_temp is not None:
             data[ATTR_ACTIVE_TARGET_TEMP] = show_temp(
@@ -328,6 +268,7 @@ class ModdedThermostat(ClimateDevice, RestoreEntity):
                 self.temperature_unit,
                 self.precision,
             )
+
         return data
 
     @property
