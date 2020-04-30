@@ -6,8 +6,6 @@ Parent project: [Home Assistant](https://www.home-assistant.io/)
 
 ## Installation
 
-cd to the configuration folder, then:
+cd to the folder above configuration and clone this repository in a subfolder.
 
-```
-git clone <url> custom_components
-```
+If applicable, change the relative path in the `install.sh` file.
