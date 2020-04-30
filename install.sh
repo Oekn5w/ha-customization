@@ -7,7 +7,7 @@
 
 HACONF=../config
 
-SUBFOLDERS=("custom-components" "www")
+SUBFOLDERS=("custom_components" "www")
 
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself
 SCRIPTPATH=$(dirname "$(realpath -s "$0")")
