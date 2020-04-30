@@ -7,6 +7,8 @@
 
 HACONF=../config
 
+SUBFOLDERS=("custom-components" "www")
+
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself
 SCRIPTPATH=$(dirname "$(realpath -s "$0")")
 
@@ -24,3 +26,8 @@ if ! [ -f "$CONFDIR/configuration.yaml" -o -f "$CONFDIR/configuration.yml" ] ; t
     exit 1
 fi
 
+for SUBFOLDER in $SUBFOLDERS ; do
+    if [ -d "$SCRIPTPATH/$SUBFOLDER" ] ; then
+        rsync -vr --delete "$SCRIPTPATH/$SUBFOLDER" "$CONFDIR"
+    fi
+done
