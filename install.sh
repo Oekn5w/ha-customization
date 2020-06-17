@@ -26,7 +26,7 @@ if ! [ -f "$CONFDIR/configuration.yaml" -o -f "$CONFDIR/configuration.yml" ] ; t
     exit 1
 fi
 
-for SUBFOLDER in $SUBFOLDERS ; do
+for SUBFOLDER in "${SUBFOLDERS[@]}" ; do
     if [ -d "$SCRIPTPATH/$SUBFOLDER" ] ; then
         rsync -vr --delete "$SCRIPTPATH/$SUBFOLDER" "$CONFDIR"
     fi
