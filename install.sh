@@ -7,7 +7,9 @@
 
 HACONF=../config
 
-SUBFOLDERS=("custom_components" "www")
+SUBFOLDER_CC=custom_components
+SUBFOLDER_WWW=www
+SUBFOLDER_WWW_INC=www-include
 
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself
 SCRIPTPATH=$(dirname "$(realpath -s "$0")")
@@ -26,8 +28,12 @@ if ! [ -f "$CONFDIR/configuration.yaml" -o -f "$CONFDIR/configuration.yml" ] ; t
     exit 1
 fi
 
-for SUBFOLDER in "${SUBFOLDERS[@]}" ; do
-    if [ -d "$SCRIPTPATH/$SUBFOLDER" ] ; then
-        rsync -vr --delete "$SCRIPTPATH/$SUBFOLDER" "$CONFDIR"
+if [ -d "$SCRIPTPATH/$SUBFOLDER_CC" ] ; then
+    rsync -vr --delete "$SCRIPTPATH/$SUBFOLDER_CC" "$CONFDIR"
+fi
+if [ -d "$SCRIPTPATH/$SUBFOLDER_WWW" ] ; then
+    rsync -vr --delete "$SCRIPTPATH/$SUBFOLDER_WWW" "$CONFDIR"
+    if [ -d "$CONFDIR/$SUBFOLDER_WWW_INC" ] ; then
+        rsync -vr "$CONFDIR/$SUBFOLDER_WWW_INC/" "$CONFDIR/$SUBFOLDER_WWW"
     fi
-done
+fi
