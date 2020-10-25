@@ -1,3 +1,4 @@
+// https://github.com/ofekashery/vertical-stack-in-card
 const vsinVersion = '0.3.3';
 console.log(`%cstack-in-card\n%cVersion: ${vsinVersion}`, 'color: #1976d2; font-weight: bold;', '');
 
