@@ -450,7 +450,7 @@ class ModdedThermostat(ClimateEntity, RestoreEntity):
                     await self._async_heater_turn_off()
                 elif time is not None:
                     # The time argument is passed only in keep-alive case
-                    _LOGGER.info(
+                    _LOGGER.debug(
                         "Keep-alive - Turning on heater heater %s",
                         self.heater_entity_id,
                     )
@@ -461,7 +461,7 @@ class ModdedThermostat(ClimateEntity, RestoreEntity):
                     await self._async_heater_turn_on()
                 elif time is not None:
                     # The time argument is passed only in keep-alive case
-                    _LOGGER.info(
+                    _LOGGER.debug(
                         "Keep-alive - Turning off heater %s", self.heater_entity_id
                     )
                     await self._async_heater_turn_off()
