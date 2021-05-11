@@ -36,6 +36,7 @@ from homeassistant.const import (
 )
 
 from homeassistant.core import DOMAIN as HA_DOMAIN, callback
+from homeassistant.exceptions import ConditionErrorMessage
 from homeassistant.helpers import condition
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.event import (
@@ -433,12 +434,16 @@ class ModdedThermostat(ClimateEntity, RestoreEntity):
                         current_state = STATE_ON
                     else:
                         current_state = HVAC_MODE_OFF
-                    long_enough = condition.state(
-                        self.hass,
-                        self.heater_entity_id,
-                        current_state,
-                        self.min_cycle_duration,
-                    )
+                    try:
+                        long_enough = condition.state(
+                            self.hass,
+                            self.heater_entity_id,
+                            current_state,
+                            self.min_cycle_duration,
+                        )
+                    except ConditionErrorMessage:
+                        _LOGGER.warning("Heater %s not (yet) available.", self.heater_entity_id)
+                        return
                     if not long_enough:
                         return
 
