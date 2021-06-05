@@ -1,59 +1,60 @@
-// https://github.com/ofekashery/vertical-stack-in-card
-const vsinVersion = '0.3.3';
-console.log(`%cstack-in-card\n%cVersion: ${vsinVersion}`, 'color: #1976d2; font-weight: bold;', '');
+console.log(`%cvertical-stack-in-card\n%cVersion: ${'0.4.1'}`, 'color: #1976d2; font-weight: bold;', '');
 
-class StackInCard extends HTMLElement {
+class VerticalStackInCard extends HTMLElement {
   constructor() {
     super();
   }
 
-  async setConfig(config) {
+  setConfig(config) {
+    this._cardSize = {};
+    this._cardSize.promise = new Promise((resolve) => (this._cardSize.resolve = resolve));
+
     if (!config || !config.cards || !Array.isArray(config.cards)) {
       throw new Error('Card config incorrect');
     }
     this._config = config;
     this._refCards = [];
-
-    if (window.loadCardHelpers) {
-      this.helpers = await window.loadCardHelpers();
-    }
-
     this.renderCard();
   }
 
-  renderCard() {
+  async renderCard() {
     const config = this._config;
+    if (window.loadCardHelpers) {
+      this.helpers = await window.loadCardHelpers();
+    }
     const promises = config.cards.map((config) => this.createCardElement(config));
-    Promise.all(promises).then((cards) => {
-      cards.forEach((card) => {
-        if (card.updateComplete) {
-          card.updateComplete.then(() => this.styleCard(card));
-        } else {
-          this.styleCard(card);
-        }
-      });
+    this._refCards = await Promise.all(promises);
 
-      this._refCards = cards;
-      const card = document.createElement('ha-card');
-      const cardContent = document.createElement('div');
-      card.header = config.title;
-      card.style.overflow = 'hidden';
-      cards.forEach((card) => cardContent.appendChild(card));
-      if (config.horizontal) {
-        cardContent.style.display = 'flex';
-        cardContent.style.margin = 10;
-        cardContent.childNodes.forEach((card) => {
-          card.style.flex = '1 1 0';
-          card.style.minWidth = 0;
-        });
+    // Style cards
+    this._refCards.forEach((card) => {
+      if (card.updateComplete) {
+        card.updateComplete.then(() => this.styleCard(card));
+      } else {
+        this.styleCard(card);
       }
-      card.appendChild(cardContent);
-
-      while (this.hasChildNodes()) {
-        this.removeChild(this.lastChild);
-      }
-      this.appendChild(card);
     });
+
+    // Create the card
+    const card = document.createElement('ha-card');
+    const cardContent = document.createElement('div');
+    card.header = config.title;
+    card.style.overflow = 'hidden';
+    this._refCards.forEach((card) => cardContent.appendChild(card));
+    if (config.horizontal) {
+      cardContent.style.display = 'flex';
+      cardContent.childNodes.forEach((card) => {
+        card.style.flex = '1 1 0';
+        card.style.minWidth = 0;
+      });
+    }
+    card.appendChild(cardContent);
+    while (this.hasChildNodes()) {
+      this.removeChild(this.lastChild);
+    }
+    this.appendChild(card);
+
+    // Calculate card size
+    this._cardSize.resolve();
   }
 
   async createCardElement(cardConfig) {
@@ -118,11 +119,15 @@ class StackInCard extends HTMLElement {
   }
 
   styleCard(element) {
+    const config = this._config;
     if (element.shadowRoot) {
       if (element.shadowRoot.querySelector('ha-card')) {
         let ele = element.shadowRoot.querySelector('ha-card');
         ele.style.boxShadow = 'none';
         ele.style.borderRadius = '0';
+        if ('styles' in config) {
+          Object.entries(config.styles).forEach(([key, value]) => ele.style.setProperty(key, value));
+        }
       } else {
         let searchEles = element.shadowRoot.getElementById('root');
         if (!searchEles) {
@@ -142,6 +147,9 @@ class StackInCard extends HTMLElement {
         let ele = element.querySelector('ha-card');
         ele.style.boxShadow = 'none';
         ele.style.borderRadius = '0';
+        if ('styles' in config) {
+          Object.entries(config.styles).forEach(([key, value]) => ele.style.setProperty(key, value));
+        }
       }
       let searchEles = element.childNodes;
       for (let i = 0; i < searchEles.length; i++) {
@@ -153,13 +161,21 @@ class StackInCard extends HTMLElement {
     }
   }
 
-  getCardSize() {
-    let totalSize = 0;
-    this._refCards.forEach((element) => {
-      totalSize += typeof element.getCardSize === 'function' ? element.getCardSize() : 1;
-    });
-    return totalSize;
+  _computeCardSize(card) {
+    if (typeof card.getCardSize === 'function') {
+      return card.getCardSize();
+    }
+    return customElements
+      .whenDefined(card.localName)
+      .then(() => this._computeCardSize(card))
+      .catch(() => 1);
+  }
+
+  async getCardSize() {
+    await this._cardSize.promise;
+    const sizes = await Promise.all(this._refCards.map(this._computeCardSize));
+    return sizes.reduce((a, b) => a + b);
   }
 }
 
-customElements.define('stack-in-card', StackInCard);
+customElements.define('vertical-stack-in-card', VerticalStackInCard);
