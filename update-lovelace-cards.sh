@@ -45,7 +45,7 @@ echo "$SER_FILE?v=$SER_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 SIC_REPO="ofekashery/vertical-stack-in-card"
 SIC_FILE="stack-in-card.js"
 SIC_TAG=$(curl -s https://api.github.com/repos/$SIC_REPO/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-curl -o "$SIC_FILE" "https://raw.githubusercontent.com/$SIC_REPO/$SIC_TAG/vertical-stack-in-card.js" 2>/dev/null
+curl "https://raw.githubusercontent.com/$SIC_REPO/$SIC_TAG/vertical-stack-in-card.js" 2>/dev/null | sed s/vertical-stack-in-card/stack-in-card/ > "$SIC_FILE"
 echo "$SIC_FILE?v=$SIC_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/thomasloven/lovelace-template-entity-row
