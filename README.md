@@ -6,6 +6,8 @@ Parent project: [Home Assistant](https://www.home-assistant.io/)
 
 ## References
 
+### Custom components
+- adaptive lighting: []
 - favicon: [hass-favicon by Thomas Lovén](https://github.com/thomasloven/hass-favicon)
 - stack-in-card: [vertical-stack-in-card by ofekashery](https://github.com/ofekashery/vertical-stack-in-card)
 
