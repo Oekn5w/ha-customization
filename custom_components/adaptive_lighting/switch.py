@@ -214,7 +214,7 @@ def _split_service_data(service_data, adapt_brightness, adapt_color):
     transition = service_data.get(ATTR_TRANSITION)
     if transition is not None:
         # Split the transition over both commands
-        service_data[ATTR_TRANSITION] /= 2
+        service_data[ATTR_TRANSITION] *= 0.45
     service_datas = []
     if adapt_color:
         service_data_color = service_data.copy()
