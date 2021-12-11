@@ -1,6 +1,6 @@
-fold-entity-row.js?v=20.0.5
+fold-entity-row.js?v=20.0.12
 layout-card.js?v=2.3.1
-mini-media-player-bundle.js?v=v1.14.0
+mini-media-player-bundle.js?v=v1.15.0
 multiple-entity-row.js?v=v4.2.0
 slider-entity-row.js?v=17.2.1
 stack-in-card.js?v=v0.4.2
