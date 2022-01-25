@@ -140,6 +140,7 @@ from .const import (
     SERVICE_APPLY,
     SERVICE_SET_ACCENT_COLOR,
     SERVICE_SET_MANUAL_CONTROL,
+    SEPARATION_TRANSITION_TIME_RELATIVE,
     SLEEP_MODE_SWITCH,
     SUN_EVENT_MIDNIGHT,
     SUN_EVENT_NOON,
@@ -212,9 +213,9 @@ def is_our_context(context: Optional[Context]) -> bool:
 def _split_service_data(service_data, adapt_brightness, adapt_color):
     """Split service_data into two dictionaries (for color and brightness)."""
     transition = service_data.get(ATTR_TRANSITION)
-    if transition is not None:
+    if transition is not None and adapt_color and adapt_brightness:
         # Split the transition over both commands
-        service_data[ATTR_TRANSITION] *= 0.45
+        service_data[ATTR_TRANSITION] *= (0.5 * (1 - SEPARATION_TRANSITION_TIME_RELATIVE))
     service_datas = []
     if adapt_color:
         service_data_color = service_data.copy()
@@ -931,15 +932,17 @@ class AdaptiveSwitch(SwitchEntity, RestoreEntity):
         if not self._separate_turn_on_commands:
             await turn_on(service_data)
         else:
+            whole_transition = service_data.get(ATTR_TRANSITION)
             # Could be a list of length 1 or 2
             service_datas = _split_service_data(
                 service_data, adapt_brightness, adapt_color
             )
             await turn_on(service_datas[0])
             if len(service_datas) == 2:
-                transition = service_datas[0].get(ATTR_TRANSITION)
-                if transition is not None:
-                    await asyncio.sleep(transition)
+                if whole_transition is not None:
+                    wait_time = service_datas[0].get(ATTR_TRANSITION) + \
+                                whole_transition * SEPARATION_TRANSITION_TIME_RELATIVE
+                    await asyncio.sleep(wait_time)
                 await turn_on(service_datas[1])
 
     async def _update_attrs_and_maybe_adapt_lights(

@@ -66,6 +66,7 @@ CONF_ACCENT_HS = "hs"
 CONF_ACCENT_XY = "xy"
 
 TURNING_OFF_DELAY = 5
+SEPARATION_TRANSITION_TIME_RELATIVE = 0.05
 
 
 def int_between(min_int, max_int):
