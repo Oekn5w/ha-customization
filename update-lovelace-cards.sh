@@ -20,6 +20,13 @@ LC_TAG=$(curl -s https://api.github.com/repos/$LC_REPO/releases/latest | grep -o
 curl -O "https://raw.githubusercontent.com/$LC_REPO/$LC_TAG/$LC_FILE" 2>/dev/null
 echo "$LC_FILE?v=$LC_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
+# https://github.com/kalkih/mini-graph-card
+MP_REPO="kalkih/mini-graph-card"
+MP_FILE="mini-graph-card-bundle.js"
+MP_TAG=$(curl -s https://api.github.com/repos/$MP_REPO/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+curl -L -O "https://github.com/$MP_REPO/releases/download/$MP_TAG/$MP_FILE" 2>/dev/null
+echo "$MP_FILE?v=$MP_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
 # https://github.com/kalkih/mini-media-player
 MP_REPO="kalkih/mini-media-player"
 MP_FILE="mini-media-player-bundle.js"
