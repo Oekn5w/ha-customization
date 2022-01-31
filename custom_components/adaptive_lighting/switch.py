@@ -133,6 +133,7 @@ from .const import (
     CONF_TAKE_OVER_CONTROL,
     CONF_TRANSITION,
     CONF_TURN_ON_LIGHTS,
+    DELAY_BETWEEN_LIGHTS,
     DOMAIN,
     EXTRA_VALIDATION,
     ENABLE_ACCENT_COLOR_SWITCH,
@@ -944,6 +945,7 @@ class AdaptiveSwitch(SwitchEntity, RestoreEntity):
                                 whole_transition * SEPARATION_TRANSITION_TIME_RELATIVE
                     await asyncio.sleep(wait_time)
                 await turn_on(service_datas[1])
+        await asyncio.sleep(DELAY_BETWEEN_LIGHTS)
 
     async def _update_attrs_and_maybe_adapt_lights(
         self,
