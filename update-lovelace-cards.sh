@@ -23,10 +23,10 @@ curl -O "https://raw.githubusercontent.com/$LC_REPO/$LC_TAG/$LC_FILE" 2>/dev/nul
 echo "$PATHPREFIX$LC_FILE?v=$LC_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/kalkih/mini-graph-card
-# on pre-releases
+# on raw tags, download might break
 MG_REPO="kalkih/mini-graph-card"
 MG_FILE="mini-graph-card-bundle.js"
-MG_TAG=$(curl -s https://api.github.com/repos/$MG_REPO/releases | jq -r 'first | .tag_name')
+MG_TAG=$(curl -s https://api.github.com/repos/$MG_REPO/tags | jq -r 'first | .name')
 curl -L -O "https://github.com/$MG_REPO/releases/download/$MG_TAG/$MG_FILE" 2>/dev/null
 echo "$PATHPREFIX$MG_FILE?v=$MG_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
