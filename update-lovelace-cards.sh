@@ -23,6 +23,7 @@ curl -O "https://raw.githubusercontent.com/$LC_REPO/$LC_TAG/$LC_FILE" 2>/dev/nul
 echo "$PATHPREFIX$LC_FILE?v=$LC_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/kalkih/mini-graph-card
+# on pre-releases
 MG_REPO="kalkih/mini-graph-card"
 MG_FILE="mini-graph-card-bundle.js"
 MG_TAG=$(curl -s https://api.github.com/repos/$MG_REPO/releases | jq -r 'first | .tag_name')
@@ -44,9 +45,10 @@ curl -O "https://raw.githubusercontent.com/$MER_REPO/$MER_TAG/$MER_FILE" 2>/dev/
 echo "$PATHPREFIX$MER_FILE?v=$MER_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/thomasloven/lovelace-slider-entity-row
+# on raw tags
 SER_REPO="thomasloven/lovelace-slider-entity-row"
 SER_FILE="slider-entity-row.js"
-SER_TAG=$(curl -s https://api.github.com/repos/$SER_REPO/releases/latest | jq -r '.tag_name')
+SER_TAG=$(curl -s https://api.github.com/repos/$SER_REPO/tags | jq -r '.[] | select(.name|test("^\\d.*";"g")) .name' | head -n 1)
 curl -O "https://raw.githubusercontent.com/$SER_REPO/$SER_TAG/$SER_FILE" 2>/dev/null
 echo "$PATHPREFIX$SER_FILE?v=$SER_TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
