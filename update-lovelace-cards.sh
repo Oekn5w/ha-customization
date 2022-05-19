@@ -8,6 +8,8 @@ PATHPREFIX=/local/lovelace-custom/
 
 cd "$SCRIPTPATH/www/lovelace-custom"
 
+# sorted by file name
+
 # https://github.com/thomasloven/lovelace-fold-entity-row
 REPO="thomasloven/lovelace-fold-entity-row"
 FILE="fold-entity-row.js"
@@ -42,6 +44,13 @@ REPO="benct/lovelace-multiple-entity-row"
 FILE="multiple-entity-row.js"
 TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
+# https://github.com/piitaya/lovelace-mushroom
+REPO="piitaya/lovelace-mushroom"
+FILE="mushroom.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/thomasloven/lovelace-slider-entity-row
