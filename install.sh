@@ -51,7 +51,7 @@ python3 "$SCRIPTPATH/themes-building/create-themes.py" "$CONFDIR"
 retVal=$?
 if [ $retVal -ne 0 ]; then
     >&2 echo "Error creating themes file."
-    exit(1)
+    exit 1
 else
     echo "Themes file created."
 fi
