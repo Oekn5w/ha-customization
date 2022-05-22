@@ -48,7 +48,7 @@ if config_folder is None:
       break
     tempfolder = tempfolder.parent
 if config_folder is None:
-  print('create_themes.py: Could not find configuration folder. Exiting')
+  sys.stderr.print('create_themes.py: Could not find configuration folder. Exiting.')
   exit(1)
 
 folder_fname = [
