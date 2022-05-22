@@ -37,3 +37,7 @@ if [ -d "$SCRIPTPATH/$SUBFOLDER_WWW" ] ; then
         rsync -vr "$CONFDIR/$SUBFOLDER_WWW_INC/" "$CONFDIR/$SUBFOLDER_WWW"
     fi
 fi
+
+pip3 install -r "$SCRIPTPATH/themes-building/requirements.txt"
+
+python3 "$SCRIPTPATH/themes-building/create-themes.py" "$CONFDIR"
