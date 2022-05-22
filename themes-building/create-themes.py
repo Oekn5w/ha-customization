@@ -29,7 +29,7 @@ def average_color(fname):
   color = Image.open(fname).resize((1, 1)).getpixel((0, 0))
   hex_color = "#{:02x}{:02x}{:02x}".format(*color)
   rgb_color = ImageColor.getrgb(hex_color)
-  return "rgba({}, {}, {}, 0.8)".format(*rgb_color)
+  return "rgba({}, {}, {}, 0.4)".format(*rgb_color)
 
 config_folder = None
 if len(sys.argv) > 1:

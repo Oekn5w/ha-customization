@@ -30,7 +30,7 @@ ios-{{ which }}-mode-{{ color }}{{ suffix }}:
   state-icon-unavailable-color: var(--disabled-text-color)
   paper-item-icon-active-color: {{ state_icon_active_color }}  # see https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/30
   # Sliders
-  paper-slider-knob-color: "#FFF"
+  paper-slider-knob-color: "#FFFFFF"
   paper-slider-knob-start-color: var(--paper-slider-knob-color)
   paper-slider-pin-color: var(--paper-slider-knob-color)
   paper-slider-active-color: {{ paper_slider_active_color }}  # from Apple systemBlue {{ which }} mode
@@ -67,11 +67,19 @@ ios-{{ which }}-mode-{{ color }}{{ suffix }}:
   lumo-body-text-color: var(--primary-text-color)  # see https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/42
   app-header-background-color: {{ app_header_background_color }}
   markdown-code-background-color: {{ markdown_code_background_color }}
-  code-editor-background-color: var(--disabled-text-color)
+  code-editor-background-color: {{ code_editor_background_color }}
   # Custom
   mcg-title-letter-spacing: .15em
   mini-media-player-base-color: white
   mini-media-player-icon-color: white
-  # Additionally
-  switch-unchecked-color: var(--light-primary-color)
-  ha-label-badge-title-width: 7em
+  # Added for https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/72
+  # TODO: add description for lines below. Suggested in https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/72
+  input-ink-color: var(--primary-text-color)
+  input-fill-color: transparent
+  input-disabled-fill-color: transparent
+  input-label-ink-color: var(--primary-text-color)
+  input-disabled-ink-color: var(--disabled-text-color)
+  input-dropdown-icon-color: var(--primary-text-color)
+  input-idle-line-color: var(--secondary-text-color)
+  input-hover-line-color: var(--secondary-text-color)
+  codemirror-property: var(--accent-color)
