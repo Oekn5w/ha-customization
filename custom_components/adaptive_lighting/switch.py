@@ -901,7 +901,7 @@ class AdaptiveSwitch(SwitchEntity, RestoreEntity):
 
         # The switch might be off and not have _settings set.
         self._settings = self._sun_light_settings.get_settings(
-            self.sleep_mode_switch.is_on, transition
+            self.sleep_mode_switch.is_on, self.accent_color_switch.is_on, transition
         )
 
         if "brightness" in features and adapt_brightness:
@@ -1064,7 +1064,7 @@ class AdaptiveSwitch(SwitchEntity, RestoreEntity):
         await self._update_attrs_and_maybe_adapt_lights(
             transition=self._initial_transition,
             force=True,
-            context=self.create_context("accent"),
+            context=self.create_context("accent", parent=event.context),
         )
 
     async def _light_event(self, event: Event) -> None:
