@@ -8,14 +8,23 @@ PATHPREFIX=/local/lovelace-custom/
 
 cd "$SCRIPTPATH/www/lovelace-custom"
 
+rm -f "$SCRIPTPATH/$VERSIONSFILE"
+
 # sorted by file name
+
+# https://github.com/RomRider/apexcharts-card
+REPO="RomRider/apexcharts-card"
+FILE="apexcharts-card.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/thomasloven/lovelace-fold-entity-row
 REPO="thomasloven/lovelace-fold-entity-row"
 FILE="fold-entity-row.js"
 TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
-echo "$PATHPREFIX$FILE?v=$TAG" > "$SCRIPTPATH/$VERSIONSFILE"
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/thomasloven/lovelace-layout-card
 REPO="thomasloven/lovelace-layout-card"
