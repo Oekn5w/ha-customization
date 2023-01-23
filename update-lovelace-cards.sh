@@ -2,7 +2,7 @@
 
 SCRIPTPATH=$(dirname "$(realpath -s "$0")")
 
-VERSIONSFILE=jsversions.txt
+VERSIONSFILE=versions-js.txt
 
 PATHPREFIX=/local/lovelace-custom/
 
