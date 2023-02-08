@@ -26,6 +26,13 @@ TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_n
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
+# https://github.com/MindFreeze/ha-sankey-chart
+REPO="MindFreeze/ha-sankey-chart"
+FILE="ha-sankey-chart.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
 # https://github.com/thomasloven/lovelace-layout-card
 REPO="thomasloven/lovelace-layout-card"
 FILE="layout-card.js"
@@ -67,6 +74,13 @@ REPO="htmltiger/numberbox-card"
 FILE="numberbox-card.js"
 TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
+# https://github.com/ulic75/power-flow-card
+REPO="ulic75/power-flow-card"
+FILE="power-flow-card.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
 # https://github.com/thomasloven/lovelace-slider-entity-row
