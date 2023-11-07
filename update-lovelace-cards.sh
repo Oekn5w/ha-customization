@@ -83,6 +83,13 @@ TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_n
 curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
+# https://github.com/custom-cards/slider-button-card
+REPO="custom-cards/slider-button-card"
+FILE="slider-button-card.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
 # https://github.com/thomasloven/lovelace-slider-entity-row
 # on raw tags
 REPO="thomasloven/lovelace-slider-entity-row"
