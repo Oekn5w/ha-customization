@@ -40,6 +40,13 @@ TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_n
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
+# https://github.com/artem-sedykh/mini-climate-card
+REPO="artem-sedykh/mini-climate-card"
+FILE="mini-climate-card-bundle.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
 # https://github.com/kalkih/mini-graph-card
 # on raw tags, download might break
 REPO="kalkih/mini-graph-card"
