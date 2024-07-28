@@ -76,8 +76,8 @@ TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_n
 curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
-# https://github.com/htmltiger/numberbox-card
-REPO="htmltiger/numberbox-card"
+# https://github.com/junkfix/numberbox-card
+REPO="junkfix/numberbox-card"
 FILE="numberbox-card.js"
 TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
