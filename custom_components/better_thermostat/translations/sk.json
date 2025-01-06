@@ -3,10 +3,11 @@
   "config": {
     "step": {
       "user": {
-        "description": "Nastavenie lepšieho termostatu na integráciu s aplikáciou Home Assistant\n**Ak potrebujete viac informácií: https://better-thermostat.org/configuration#first-step** ",
+        "description": "Nastavenie lepšieho termostatu na integráciu s aplikáciou Home Assistant\n**Ak potrebujete viac informácií: https://better-thermostat.org/configuration#first-step**",
         "data": {
           "name": "Názov",
           "thermostat": "Skutočný termostat",
+          "cooler": "Chladiace zariadenie (voliteľné)",
           "temperature_sensor": "Snímač teploty",
           "humidity_sensor": "Snímač vlhkosti",
           "window_sensors": "Snímač okna",

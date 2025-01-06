@@ -3,11 +3,11 @@
   "config": {
     "step": {
       "user": {
-        "description": "Einrichtung von Better Thermostat mit Home Assistant\n**Für mehr Informationen: https://better-thermostat.org/configuration#first-step** ",
+        "description": "Einrichtung von Better Thermostat mit Home Assistant\n**Für mehr Informationen: https://better-thermostat.org/configuration#first-step**",
         "data": {
           "name": "Name",
           "thermostat": "Das reale Thermostat",
-          "cooler": "Klimmagerät AC (optional)",
+          "cooler": "Klimagerät AC (optional)",
           "temperature_sensor": "Externer Temperatursensor",
           "humidity_sensor": "Luftfeuchtigkeitssensor",
           "window_sensors": "Fenstersensor(en)",
