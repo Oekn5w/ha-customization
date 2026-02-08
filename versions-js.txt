@@ -14,6 +14,6 @@
 /local/lovelace-custom/power-flow-card.js?v=v2.6.2
 /local/lovelace-custom/slider-button-card.js?v=v1.13.0
 /local/lovelace-custom/slider-entity-row.js?v=17.4.1
-/local/lovelace-custom/valetudo-map-card.js?v=v2023.04.0
 /local/lovelace-custom/stack-in-card.js?v=v1.0.1
 /local/lovelace-custom/template-entity-row.js?v=v1.4.1
+/local/lovelace-custom/valetudo-map-card.js?v=v2023.04.0

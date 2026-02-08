@@ -6,3 +6,5 @@ favicon:
     https://github.com/thomasloven/hass-favicon/tree/af5cf85ec57058ae07ea79001ace132070fbf833
 modded_thermostat:
     modded from the generic thermostat built-in component
+valetudo:
+    https://github.com/Hypfer/hass-valetudo 2026.01.1-0-gac6a23c
