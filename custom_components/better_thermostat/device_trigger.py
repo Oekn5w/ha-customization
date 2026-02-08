@@ -1,20 +1,16 @@
+"""Device trigger helpers for Better Thermostat.
+
+This module implements the device trigger helpers and validators used by
+Home Assistant's device trigger integration for Better Thermostat climate
+devices.
+"""
+
 from __future__ import annotations
 
-import voluptuous as vol
-from homeassistant.core import CALLBACK_TYPE, HomeAssistant
-from homeassistant.helpers import config_validation as cv, entity_registry
-
+from homeassistant.components.climate.const import HVAC_MODES
 from homeassistant.components.homeassistant.triggers import (
     numeric_state as numeric_state_trigger,
     state as state_trigger,
-)
-from . import DOMAIN
-from homeassistant.helpers.trigger import TriggerActionType, TriggerInfo
-from homeassistant.helpers.typing import ConfigType
-from homeassistant.components.climate.const import (
-    ATTR_CURRENT_TEMPERATURE,
-    ATTR_CURRENT_HUMIDITY,
-    HVAC_MODES,
 )
 from homeassistant.const import (
     CONF_ABOVE,
@@ -27,12 +23,19 @@ from homeassistant.const import (
     CONF_TYPE,
     PERCENTAGE,
 )
+from homeassistant.core import CALLBACK_TYPE, HomeAssistant
+from homeassistant.helpers import config_validation as cv, entity_registry
+from homeassistant.helpers.trigger import TriggerActionType, TriggerInfo
+from homeassistant.helpers.typing import ConfigType
+import voluptuous as vol
+
+from . import DOMAIN
 
 
 async def async_get_triggers(
     hass: HomeAssistant, device_id: str
 ) -> list[dict[str, str]]:
-    """List device triggers for Climate devices."""
+    """List device triggers for Better Thermostat devices."""
     registry = entity_registry.async_get(hass)
     triggers = []
 
@@ -42,8 +45,9 @@ async def async_get_triggers(
             continue
 
         state = hass.states.get(entry.entity_id)
+        if not state:
+            continue
 
-        # Add triggers for each entity that belongs to this integration
         base_trigger = {
             CONF_PLATFORM: "device",
             CONF_DEVICE_ID: device_id,
@@ -51,13 +55,26 @@ async def async_get_triggers(
             CONF_ENTITY_ID: entry.entity_id,
         }
 
-        triggers.append({**base_trigger, CONF_TYPE: "hvac_mode_changed"})
-
-        if state and ATTR_CURRENT_TEMPERATURE in state.attributes:
-            triggers.append({**base_trigger, CONF_TYPE: "current_temperature_changed"})
-
-        if state and ATTR_CURRENT_HUMIDITY in state.attributes:
-            triggers.append({**base_trigger, CONF_TYPE: "current_humidity_changed"})
+        # Add standard climate triggers
+        triggers.extend(
+            [
+                {
+                    **base_trigger,
+                    CONF_TYPE: "hvac_mode_changed",
+                    "metadata": {"secondary": False},
+                },
+                {
+                    **base_trigger,
+                    CONF_TYPE: "current_temperature_changed",
+                    "metadata": {"secondary": False},
+                },
+                {
+                    **base_trigger,
+                    CONF_TYPE: "current_humidity_changed",
+                    "metadata": {"secondary": True},
+                },
+            ]
+        )
 
     return triggers
 
@@ -122,31 +139,35 @@ async def async_get_trigger_capabilities(
     """List trigger capabilities."""
     trigger_type = config[CONF_TYPE]
 
-    if trigger_type == "hvac_action_changed":
-        return {}
-
     if trigger_type == "hvac_mode_changed":
         return {
             "extra_fields": vol.Schema(
-                {vol.Optional(CONF_FOR): cv.positive_time_period_dict}
+                {
+                    vol.Required(state_trigger.CONF_TO): vol.In(HVAC_MODES),
+                    vol.Optional(CONF_FOR): cv.positive_time_period_dict,
+                }
             )
         }
 
-    if trigger_type == "current_temperature_changed":
-        unit_of_measurement = hass.config.units.temperature_unit
-    else:
-        unit_of_measurement = PERCENTAGE
-
-    return {
-        "extra_fields": vol.Schema(
-            {
-                vol.Optional(
-                    CONF_ABOVE, description={"suffix": unit_of_measurement}
-                ): vol.Coerce(float),
-                vol.Optional(
-                    CONF_BELOW, description={"suffix": unit_of_measurement}
-                ): vol.Coerce(float),
-                vol.Optional(CONF_FOR): cv.positive_time_period_dict,
-            }
+    # Temperature and humidity triggers use the same schema
+    if trigger_type in ["current_temperature_changed", "current_humidity_changed"]:
+        unit = (
+            hass.config.units.temperature_unit
+            if trigger_type == "current_temperature_changed"
+            else PERCENTAGE
         )
-    }
+        return {
+            "extra_fields": vol.Schema(
+                {
+                    vol.Optional(CONF_ABOVE, description={"suffix": unit}): vol.Coerce(
+                        float
+                    ),
+                    vol.Optional(CONF_BELOW, description={"suffix": unit}): vol.Coerce(
+                        float
+                    ),
+                    vol.Optional(CONF_FOR): cv.positive_time_period_dict,
+                }
+            )
+        }
+
+    return {}

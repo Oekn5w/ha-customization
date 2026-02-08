@@ -1,0 +1,8 @@
+adaptive_lighting:
+    https://github.com/Oekn5w/adaptive-lighting/tree/1b1e5790ea1f90f001f65a8f27bee155564a4862
+better_thermostat:
+    https://github.com/KartoffelToby/better_thermostat/tree/ff516c90ebc17625bf5725734ac47388e868258e
+favicon:
+    https://github.com/thomasloven/hass-favicon/tree/af5cf85ec57058ae07ea79001ace132070fbf833
+modded_thermostat:
+    modded from the generic thermostat built-in component
