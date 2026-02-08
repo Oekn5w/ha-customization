@@ -1636,7 +1636,7 @@ class AdaptiveSwitch(SwitchEntity, RestoreEntity):
             "%s: _accent_color_switch_state_event, event: '%s'", self._name, event
         )
         # Reset the manually controlled status when the "sleep mode" changes
-        self.turn_on_off_listener.reset(*self._lights)
+        self.manager.reset(*self._lights)
         await self._update_attrs_and_maybe_adapt_lights(
             transition=self._initial_transition,
             force=True,
