@@ -1,7 +1,7 @@
 adaptive_lighting:
     https://github.com/Oekn5w/adaptive-lighting/tree/45154559879f41549fc6231823c0ac50a3bae426
 better_thermostat:
-    https://github.com/KartoffelToby/better_thermostat/tree/ff516c90ebc17625bf5725734ac47388e868258e
+    https://github.com/KartoffelToby/better_thermostat/ 1.7.0-0-gbd77fc3
 favicon:
     https://github.com/thomasloven/hass-favicon/tree/af5cf85ec57058ae07ea79001ace132070fbf833
 modded_thermostat:

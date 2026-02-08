@@ -126,13 +126,6 @@ TAG=$(curl -s https://api.github.com/repos/$REPO/tags | jq -r '.[] | select(.nam
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
-# https://github.com/Hypfer/lovelace-valetudo-map-card
-REPO="Hypfer/lovelace-valetudo-map-card"
-FILE="valetudo-map-card.js"
-TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
-curl -O "https://raw.githubusercontent.com/$REPO/$TAG/dist/$FILE" 2>/dev/null
-echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
-
 # https://github.com/ofekashery/vertical-stack-in-card
 REPO="ofekashery/vertical-stack-in-card"
 FILE="stack-in-card.js"
@@ -145,4 +138,11 @@ REPO="thomasloven/lovelace-template-entity-row"
 FILE="template-entity-row.js"
 TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
 curl -O "https://raw.githubusercontent.com/$REPO/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
+# https://github.com/Hypfer/lovelace-valetudo-map-card
+REPO="Hypfer/lovelace-valetudo-map-card"
+FILE="valetudo-map-card.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -O "https://raw.githubusercontent.com/$REPO/$TAG/dist/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
