@@ -46,7 +46,7 @@ if [ -d "$SCRIPTPATH/$SUBFOLDER_WWW" ] ; then
     fi
 fi
 
-pip3 install -q -r "$SCRIPTPATH/themes-building/requirements.txt"
+pip3 install --break-system-packages -q -r "$SCRIPTPATH/themes-building/requirements.txt"
 python3 "$SCRIPTPATH/themes-building/create-themes.py" "$CONFDIR"
 retVal=$?
 if [ $retVal -ne 0 ]; then

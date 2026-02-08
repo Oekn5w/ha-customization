@@ -26,6 +26,13 @@ TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_n
 curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
 echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
 
+# https://github.com/KartoffelToby/better-thermostat-ui-card
+REPO="KartoffelToby/better-thermostat-ui-card"
+FILE="better-thermostat-ui-card.js"
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r '.tag_name')
+curl -L -O "https://github.com/$REPO/releases/download/$TAG/$FILE" 2>/dev/null
+echo "$PATHPREFIX$FILE?v=$TAG" >> "$SCRIPTPATH/$VERSIONSFILE"
+
 # https://github.com/custom-cards/button-card
 REPO="custom-cards/button-card"
 FILE="button-card.js"
