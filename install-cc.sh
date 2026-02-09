@@ -9,8 +9,6 @@ HACONF=../config
 
 SUBFOLDER_CC=custom_components
 SUBFOLDER_CC_INC=cc-include
-SUBFOLDER_WWW=www
-SUBFOLDER_WWW_INC=www-include
 
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself
 SCRIPTPATH=$(dirname "$(realpath -s "$0")")
@@ -36,22 +34,4 @@ if [ -d "$SCRIPTPATH/$SUBFOLDER_CC" ] ; then
         rsync -r "$CONFDIR/$SUBFOLDER_CC_INC/" "$CONFDIR/$SUBFOLDER_CC"
         echo "Custom custom components folder added."
     fi
-fi
-if [ -d "$SCRIPTPATH/$SUBFOLDER_WWW" ] ; then
-    rsync -r --delete "$SCRIPTPATH/$SUBFOLDER_WWW" "$CONFDIR"
-    echo "Internal www folder copied."
-    if [ -d "$CONFDIR/$SUBFOLDER_WWW_INC" ] ; then
-        rsync -r "$CONFDIR/$SUBFOLDER_WWW_INC/" "$CONFDIR/$SUBFOLDER_WWW"
-        echo "Custom www folder added."
-    fi
-fi
-
-pip3 install --break-system-packages -q -r "$SCRIPTPATH/themes-building/requirements.txt"
-python3 "$SCRIPTPATH/themes-building/create-themes.py" "$CONFDIR"
-retVal=$?
-if [ $retVal -ne 0 ]; then
-    >&2 echo "Error creating themes file."
-    exit 1
-else
-    echo "Themes file created."
 fi
