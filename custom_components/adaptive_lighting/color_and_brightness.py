@@ -291,7 +291,7 @@ class SunLightSettings:
                 / (self.accent_color_upper_bound - self.accent_color_lower_bound)
             return self._calc_accented_color_interpolation(daylight_color_rgb, accent_color_rgb, accent_percent)
         else:
-            return self.accent_color
+            return accent_color_rgb
     ######
 
     @cached_property
