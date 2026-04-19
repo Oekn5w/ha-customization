@@ -48,6 +48,8 @@ ios-{{ which }}-mode-{{ color }}{{ suffix }}:
   ha-card-border-radius: 20px
   ha-card-background: {{  ha_card_background }}
   paper-card-background-color: var(--ha-card-background)
+  rgb-card-background-color: {{ rgb_card_background }} # see https://github.com/basnijholt/lovelace-ios-themes/issues/60
+  ha-card-border-width: 0  # https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/82#event-7732695357
   # Toggles
   paper-toggle-button-checked-button-color: "#484848"
   paper-toggle-button-checked-bar-color: "#484848"
@@ -68,10 +70,13 @@ ios-{{ which }}-mode-{{ color }}{{ suffix }}:
   app-header-background-color: {{ app_header_background_color }}
   markdown-code-background-color: {{ markdown_code_background_color }}
   code-editor-background-color: {{ code_editor_background_color }}
+  clear-background-color: var(--ha-card-background)  # see https://github.com/basnijholt/lovelace-ios-themes/issues/64
   # Custom
   mcg-title-letter-spacing: .15em
   mini-media-player-base-color: white
   mini-media-player-icon-color: white
+  # Added for https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/72
+  # TODO: add description for lines below. Suggested in https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/72
   input-ink-color: var(--primary-text-color)
   input-fill-color: transparent
   input-disabled-fill-color: transparent
@@ -81,6 +86,7 @@ ios-{{ which }}-mode-{{ color }}{{ suffix }}:
   input-idle-line-color: var(--secondary-text-color)
   input-hover-line-color: var(--secondary-text-color)
   codemirror-property: var(--accent-color)
-  # Additionally
-  switch-unchecked-color: var(--light-primary-color)
-  ha-label-badge-title-width: 7em
+  # fix 2026-4
+  ha-color-form-background: var(--ha-color-neutral-95);
+  ha-color-form-background-hover: var(--ha-color-neutral-90);
+  ha-color-form-background-disabled: var(--ha-color-neutral-80);
